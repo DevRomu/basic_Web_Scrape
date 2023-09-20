@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -27,9 +29,13 @@ public class MainActivity extends AppCompatActivity {
         scrapeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scrapeTextFromUrl();
+                try {
+                    scrapeTextFromUrl();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            private void scrapeTextFromUrl(){
+            private void scrapeTextFromUrl() throws IOException {
                 // Get the URL to scrape from the website.
                 String url = "https://quotes.toscrape.com/";
 
