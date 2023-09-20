@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 Document doc = Jsoup.connect(url).get();
 
                 // Select the HTML element that contatins the text you want to scrape.
-                String scrapedText = doc.select("span").text();
+                String scrapedText = doc.getElementsByClass(".quote").text();
 
                 scrapedTextView.setText((scrapedText));
             }
