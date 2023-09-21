@@ -9,11 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-
 
     private Button scrapeButton;
     private TextView scrapedTextView;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
             }
+
             private void scrapeTextFromUrl() throws IOException {
                 // Get the URL to scrape from the website.
                 String url = "https://quotes.toscrape.com/";
@@ -42,10 +44,16 @@ public class MainActivity extends AppCompatActivity {
                 // Create a Jsoup Document Object from the URL.
                 Document doc = Jsoup.connect(url).get();
 
-                // Select the HTML element that contatins the text you want to scrape.
-                String scrapedText = doc.getElementsByClass(".quote").text();
+                // Select the HTML elements that contain the quotes.
+                Elements quoteElements = doc.select("div.quote span.text");
 
-                scrapedTextView.setText((scrapedText));
+                // Extract and concatenate the quotes.
+                StringBuilder scrapedText = new StringBuilder();
+                for (Element element : quoteElements) {
+                    scrapedText.append(element.text()).append("\n\n");
+                }
+
+                scrapedTextView.setText(scrapedText.toString());
             }
         });
     }
