@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -44,12 +45,23 @@ public class MainActivity extends AppCompatActivity {
 
                 // Extract and concatenate the quotes.
                 final StringBuilder scrapedText = new StringBuilder();
+                int count = 0;
                 for (Element element : quoteElements) {
-                    scrapedText.append(element.text()).append("\n\n");
+                    if (count < 4) {
+
+                        scrapedText.append(element.text()).append("\n\n");
+                        count++;
+                    } else {
+                        break; // Stops the scraping after two scrapes.
+                    }
                 }
 
                 // Update the UI on the main thread
-                runOnUiThread(() -> scrapedTextView.setText(scrapedText.toString()));
+                runOnUiThread(() -> {
+                    scrapedTextView.setText(scrapedText.toString());
+                    scrapedTextView.setTextSize(12);
+                    scrapedTextView.setTypeface(null, Typeface.NORMAL);
+                });
             } catch (IOException e) {
                 e.printStackTrace();
                 // Handle the exception here (e.g., show an error message to the user)
