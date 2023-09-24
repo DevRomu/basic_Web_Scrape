@@ -3,16 +3,20 @@ package com.example.myapplication;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView scrapedTextView;
+     Button scrapeButton;
+     TextView scrapedTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private void scrapeTextFromUrl() {
         // Start a new thread for network operations as it will crash if you perform network operations on the ui thread
         new Thread(() -> {
-            try {
+                try {
                 // URL to scrape from the website.
                 String url = "https://quotes.toscrape.com/";
 
